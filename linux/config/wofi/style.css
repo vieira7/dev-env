@@ -1,0 +1,74 @@
+/* ===============================
+   Wofi - Catppuccin Macchiato
+   Updated for Hyprland floating menu
+   =============================== */
+
+* {
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 14px;
+}
+
+/* Window */
+window {
+    background-color: rgba(36, 39, 58, 0.85); /* semi-transparent Macchiato */
+    border-radius: 14px;
+    border: none; /* no solid border, cleaner */
+    padding: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25); /* subtle shadow for floating effect */
+}
+
+/* Input box */
+#input {
+    margin: 8px;
+    padding: 10px;
+    border-radius: 12px;
+    border: none;
+    background-color: rgba(30, 32, 48, 0.9);
+    color: #cad3f5;
+}
+
+/* Inner box */
+#inner-box {
+    margin: 8px;
+    background-color: transparent;
+}
+
+/* Entry rows */
+#entry {
+    padding: 10px;
+    border-radius: 10px;
+    background-color: transparent;
+    color: #cad3f5;
+}
+
+/* Selected entry */
+#entry:selected {
+    background-color: rgba(138, 173, 244, 0.3); /* sapphire highlight */
+    color: #ffffff; /* brighter text on selection */
+}
+
+/* App name */
+#text {
+    color: #cad3f5;
+}
+
+/* App description */
+#text:selected {
+    color: #ffffff;
+}
+
+/* Icons */
+#img {
+    margin-right: 10px;
+    filter: brightness(1.1); /* slightly pop icons */
+}
+
+/* Scrollbar */
+scrollbar {
+    background: transparent;
+}
+scrollbar slider {
+    background-color: rgba(138, 173, 244, 0.3);
+    border-radius: 6px;
+}
+

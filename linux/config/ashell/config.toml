@@ -1,0 +1,37 @@
+app_launcher_cmd = "hyprlauncher"
+
+[[CustomModule]]
+name = "appLauncher"
+icon = "󱗼"
+command = "hyprlauncher"
+
+[modules]
+left = [ [ "appLauncher", "Updates", "Workspaces" ] ]
+center = [ "WindowTitle" ]
+right = [ "SystemInfo", [  "Tray", "Clock", "Privacy", "Settings" ] ]
+
+[updates]
+check_cmd = "pacman -Qu;paru -Qua"
+update_cmd = 'ghostty -e bash -c "sudo pacman -Syu;paru; echo Done - Press enter to exit; read" &'
+
+[appearance]
+style = "Islands"
+opacity = 0.8
+# Catppuccin Macchiato - Blue accent theme
+primary_color = "#8aadf4"           # Blue
+success_color = "#a6da95"           # Green
+text_color = "#cad3f5"              # Text
+workspace_colors = [ "#8aadf4", "#7dc4e4" ]              # Blue, Sapphire
+special_workspace_colors = [ "#91d7e3", "#8bd5ca" ]      # Sky, Teal
+
+[appearance.danger_color]
+base = "#ed8796"                    # Red
+weak = "#ee99a0"                    # Maroon
+
+[appearance.background_color]
+base = "#24273a"                    # Base
+weak = "#1e2030"                    # Mantle
+strong = "#363a4f"                  # Surface0
+
+[appearance.secondary_color]
+base = "#181926"                    # Crust

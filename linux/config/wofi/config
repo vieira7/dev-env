@@ -1,0 +1,12 @@
+width=450
+height=500
+location=center
+show=drun
+prompt=Search
+term=ghostty
+allow_images=true
+image_size=32
+insensitive=true
+columns=1
+no_actions=true
+
