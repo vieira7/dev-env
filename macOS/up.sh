@@ -20,3 +20,7 @@ cp -r $REPO_DIR/macOS/aerospace/aerospace.toml ~/.aerospace.toml
 
 # reload aerospace
 aerospace reload-config
+
+# copy ghostty config
+mkdir -p $HOME/.config/ghostty
+cp $REPO_DIR/ghostty/config $HOME/.config/ghostty/config
