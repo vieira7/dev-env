@@ -1,0 +1,14 @@
+# General
+term = xterm-256color
+
+# Appearance
+theme = Catppuccin Macchiato
+font-family = BerkeleyMono Font Nerd
+
+# Keybinds
+keybind = super+x=unbind
+keybind = super+v=unbind
+keybind = super+c=text:\x03
+keybind = super+shift+c=copy_to_clipboard
+keybind = super+shift+v=paste_from_clipboard
+

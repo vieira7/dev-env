@@ -8,4 +8,5 @@ cp -r $REPO_DIR/linux/config/* $HOME/.config/
 
 # copy ghostty config
 mkdir -p $HOME/.config/ghostty
-cp $REPO_DIR/ghostty/config $HOME/.config/ghostty/config
+cp $REPO_DIR/linux/ghostty/config $HOME/.config/ghostty/config
+

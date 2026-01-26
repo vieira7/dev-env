@@ -23,4 +23,5 @@ aerospace reload-config
 
 # copy ghostty config
 mkdir -p $HOME/.config/ghostty
-cp $REPO_DIR/ghostty/config $HOME/.config/ghostty/config
+cp $REPO_DIR/macOS/ghostty/config $HOME/.config/ghostty/config
+
