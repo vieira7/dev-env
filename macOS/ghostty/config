@@ -4,10 +4,7 @@ term = xterm-256color
 # Appearance
 theme = GitHub Dark Dimmed
 font-size = 15
-font-family = JetBrains Mono
-font-family-bold = JetBrains Mono Bold
-font-family-italic= JetBrains Mono Italic
-font-family-bold-italic = JetBrains Mono Bold Italic
+font-family = Roboto Mono Regular
 
 # Keybinds
 keybind = super+x=unbind
