@@ -18,8 +18,8 @@ fi
 # copy aerospace config
 cp -r $REPO_DIR/macOS/aerospace/aerospace.toml ~/.aerospace.toml
 
-# reload aerospace
-aerospace reload-config
+# launch aerospace
+open -a Aerospace
 
 # copy ghostty config
 cp -r $REPO_DIR/macOS/ghostty $HOME/.config/
