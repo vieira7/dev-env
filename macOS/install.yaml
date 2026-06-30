@@ -1,0 +1,26 @@
+default:
+  casks:
+    - zen-browser
+    - ghostty
+    - font-jetbrains-mono-nerd-font
+    - zed
+  formulae:
+    - starship
+  scripts:
+    - shared/ghostty/setup.sh
+
+dev:
+  casks:
+    - claude-code
+
+tiling:
+  casks:
+    - nikitabobko/tap/aerospace
+  formulae:
+    - FelixKratz/formulae/borders
+  scripts:
+    - macOS/aerospace/setup.sh
+
+serveradmin:
+  casks:
+    - tailscale-app
