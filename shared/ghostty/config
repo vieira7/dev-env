@@ -6,7 +6,6 @@ theme = GitHub Dark Dimmed
 unfocused-split-opacity = 1
 
 # Font
-font-family = Jetbrains Mono Medium
+font-family = Roboto Mono
 font-size = 15
 font-thicken = true
-
