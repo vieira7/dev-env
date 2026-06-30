@@ -4,14 +4,11 @@ default:
     - ghostty
     - font-jetbrains-mono-nerd-font
     - zed
+    - claude-code
   formulae:
     - starship
   scripts:
     - shared/ghostty/setup.sh
-
-dev:
-  casks:
-    - claude-code
 
 tiling:
   casks:
@@ -21,6 +18,6 @@ tiling:
   scripts:
     - macOS/aerospace/setup.sh
 
-serveradmin:
+mediaserver:
   casks:
     - tailscale-app
