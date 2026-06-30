@@ -5,8 +5,15 @@ set -e
 REPO_DIR=$(git rev-parse --show-toplevel)
 CONFIG="$REPO_DIR/macOS/install.yaml"
 
-# args: category names to install. defaults to `default` only.
-CATEGORIES=("$@")
+# args: optional `--uninstall`/`-u` flag, then category names. defaults to `default` only.
+ACTION=install
+CATEGORIES=()
+for arg in "$@"; do
+    case "$arg" in
+        -u|--uninstall) ACTION=uninstall ;;
+        *) CATEGORIES+=("$arg") ;;
+    esac
+done
 if [[ ${#CATEGORIES[@]} -eq 0 ]]; then
     CATEGORIES=(default)
 fi
@@ -47,8 +54,8 @@ yaml_list() {
     ' "$CONFIG"
 }
 
-# install homebrew
-if ! command -v brew &>/dev/null; then
+# install homebrew (skip on uninstall — no brew, nothing to remove)
+if [[ "$ACTION" == install ]] && ! command -v brew &>/dev/null; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     if [[ -x /opt/homebrew/bin/brew ]]; then
         eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -58,21 +65,43 @@ if ! command -v brew &>/dev/null; then
 fi
 
 for category in "${CATEGORIES[@]}"; do
-    echo "==> category: $category"
+    echo "==> $ACTION category: $category"
 
-    for cask in $(yaml_list "$category" casks); do
-        if ! brew list --cask "${cask##*/}" &>/dev/null; then
-            brew install --cask "$cask"
-        fi
-    done
+    if [[ "$ACTION" == install ]]; then
+        for cask in $(yaml_list "$category" casks); do
+            if ! brew list --cask "${cask##*/}" &>/dev/null; then
+                brew install --cask "$cask"
+            fi
+        done
 
-    for formula in $(yaml_list "$category" formulae); do
-        if ! brew list "${formula##*/}" &>/dev/null; then
-            brew install "$formula"
-        fi
-    done
+        for formula in $(yaml_list "$category" formulae); do
+            if ! brew list "${formula##*/}" &>/dev/null; then
+                brew install "$formula"
+            fi
+        done
 
-    for script in $(yaml_list "$category" scripts); do
-        "$REPO_DIR/$script"
-    done
+        for dir in $(yaml_list "$category" scripts); do
+            setup="$REPO_DIR/$dir/setup.sh"
+            [[ -x "$setup" ]] && "$setup"
+        done
+    else
+        # run teardown scripts first so they can clean up while their packages still exist.
+        # convention: `<dir>/teardown.sh` next to `<dir>/setup.sh`.
+        for dir in $(yaml_list "$category" scripts); do
+            teardown="$REPO_DIR/$dir/teardown.sh"
+            [[ -x "$teardown" ]] && "$teardown"
+        done
+
+        for formula in $(yaml_list "$category" formulae); do
+            if brew list "${formula##*/}" &>/dev/null; then
+                brew uninstall "${formula##*/}"
+            fi
+        done
+
+        for cask in $(yaml_list "$category" casks); do
+            if brew list --cask "${cask##*/}" &>/dev/null; then
+                brew uninstall --cask "${cask##*/}"
+            fi
+        done
+    fi
 done
