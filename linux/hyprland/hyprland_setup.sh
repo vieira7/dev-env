@@ -35,6 +35,7 @@ CONFIG_SRC="$REPOS_DIR/dev-env/linux/config/"
 CONFIG_DST="$HOME/.config/"
 mkdir -p "$CONFIG_DST"
 rsync -av "$CONFIG_SRC" "$CONFIG_DST"
+rsync -av "$REPO_DIR/dev-env/shared/ghostty" "$CONFIG_DST"
 
 # reload hyprland
 hyprctl reload
@@ -49,4 +50,3 @@ paru -S --needed --noconfirm --skipreview brave-bin
 # Set GTK theme to dark
 gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
-
