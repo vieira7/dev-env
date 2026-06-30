@@ -6,5 +6,6 @@ theme = GitHub Dark Dimmed
 unfocused-split-opacity = 1
 
 # Font
-font-size = 16
-font-thicken = true
+font-family = JetBrainsMono Nerd Font
+font-size = 15
+font-style = Bold
