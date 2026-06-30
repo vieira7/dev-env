@@ -3,16 +3,11 @@
 set -e
 
 REPO_DIR=$(git rev-parse --show-toplevel)
-BREWFILE_DIR="$REPO_DIR/macOS"
-
-# script directories to run per category. one space-separated list per category.
-# convention: each dir has `setup.sh` (install) and optionally `teardown.sh` (uninstall).
-typeset -A CATEGORY_SCRIPTS=(
-    default "shared/ghostty"
-    tiling  "macOS/aerospace"
-)
+CATEGORIES_DIR="$REPO_DIR/macOS"
 
 # args: optional `--uninstall`/`-u` flag, then category names. defaults to `default` only.
+# each category is a directory under macOS/ that may contain a Brewfile and/or
+# setup.sh (run on install) and/or teardown.sh (run on uninstall).
 ACTION=install
 CATEGORIES=()
 for arg in "$@"; do
@@ -48,23 +43,21 @@ brewfile_packages() {
 
 for category in "${CATEGORIES[@]}"; do
     echo "==> $ACTION category: $category"
-    brewfile="$BREWFILE_DIR/Brewfile.$category"
-    scripts=(${=CATEGORY_SCRIPTS[$category]})  # split on whitespace; empty if unset
+    dir="$CATEGORIES_DIR/$category"
+    brewfile="$dir/Brewfile"
+
+    if [[ ! -d "$dir" ]]; then
+        echo "no such category: $category (looked in $dir)" >&2
+        exit 1
+    fi
 
     if [[ "$ACTION" == install ]]; then
         # brew bundle is idempotent: skips anything already installed, taps included.
         [[ -f "$brewfile" ]] && brew bundle --file="$brewfile"
-
-        for dir in $scripts; do
-            setup="$REPO_DIR/$dir/setup.sh"
-            [[ -x "$setup" ]] && "$setup"
-        done
+        [[ -x "$dir/setup.sh" ]] && "$dir/setup.sh"
     else
-        # run teardown scripts first so they can clean up while their packages still exist.
-        for dir in $scripts; do
-            teardown="$REPO_DIR/$dir/teardown.sh"
-            [[ -x "$teardown" ]] && "$teardown"
-        done
+        # teardown runs first so it can clean up while packages still exist.
+        [[ -x "$dir/teardown.sh" ]] && "$dir/teardown.sh"
 
         # `brew bundle cleanup` removes packages NOT in the file — wrong direction here.
         # uninstall everything the Brewfile declares, formulae before casks.
