@@ -1,0 +1,6 @@
+cask "zen"
+cask "ghostty"
+cask "font-jetbrains-mono-nerd-font"
+cask "zed"
+cask "claude-code"
+brew "starship"
