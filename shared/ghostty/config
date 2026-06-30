@@ -1,0 +1,12 @@
+# General
+term = xterm-256color
+
+# Appearance
+theme = GitHub Dark Dimmed
+unfocused-split-opacity = 1
+
+# Font
+font-family = Jetbrains Mono Medium
+font-size = 15
+font-thicken = true
+
